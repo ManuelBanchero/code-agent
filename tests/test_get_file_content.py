@@ -1,5 +1,5 @@
-from functions.get_file_content import get_file_content
-from config import MAX_CHARS
+from src.agent_functions.get_file_content import get_file_content
+from src.config.config import MAX_CHARS
 
 
 def test():

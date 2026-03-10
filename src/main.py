@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 import argparse
-from prompts import system_prompt
-from call_function import available_functions, call_function
+from src.utils.prompts import system_prompt
+from src.call_function import available_functions, call_function
 
 load_dotenv()
 api_key = os.environ.get('GEMINI_API_KEY')
