@@ -58,12 +58,13 @@ def call_model(user_prompt, verbose):
 
                 # Add the result to a list
                 function_results.append(call_function_obj.parts[0])
-                messages.append(types.Content(
-                    role='user', parts=function_results))
 
                 if verbose:
                     print(
                         f'{call_function_obj.parts[0].function_response.response}')
+
+            messages.append(types.Content(
+                role='user', parts=function_results))
         else:
             print(response.text)
             return
