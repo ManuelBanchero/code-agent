@@ -1,16 +1,16 @@
-import argparse
-from call_model import call_model
+from build_agent import build_agent
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Code Agent')
-    parser.add_argument('user_prompt', type=str, help='User prompt')
-    parser.add_argument('--verbose', action='store_true',
-                        help='Enable verbose output')
-    args = parser.parse_args()
+    agent = build_agent()
 
-    call_model(args.user_prompt, args.verbose)
+    response, success = agent.query(
+        'watch how this project works and make a sum of 6 + 20')
+    if success:
+        print(response)
+    else:
+        print(response)
+        exit(1)
 
 
-if __name__ == "__main__":
-    main()
+main()
