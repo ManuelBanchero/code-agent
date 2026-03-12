@@ -1,1 +1,1 @@
-wait, this isn't lorem ipsum
+This is a new test.
