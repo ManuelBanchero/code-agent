@@ -16,6 +16,9 @@ class GetFilesInfo(Tool):
             }
         )
 
+    def get_schema(self):
+        return self.__schema.get_schema()
+
     def execute(self, directory='.'):
         try:
             working_dir_abs = os.path.abspath(self._working_directory)
@@ -50,6 +53,3 @@ class GetFilesInfo(Tool):
             return '\n  '.join(data_formated)
         except Exception as e:
             return f'  Error: {e}'
-
-    def get_schema(self):
-        return self.__schema.get_schema()
