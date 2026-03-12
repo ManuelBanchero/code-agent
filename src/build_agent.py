@@ -5,6 +5,7 @@ from model.Tool.GetFileContent import GetFileContent
 from model.Tool.WriteFile import WriteFile
 from model.Tool.RunPythonFile import RunPythonFile
 from model.Agent import Agent
+from model.AIModel import AIModel
 
 
 def build_agent() -> Agent:
@@ -21,12 +22,15 @@ def build_agent() -> Agent:
         'run_python_file': run_python_file
     }
 
+    # Create AI Model for the Agent
+    agent_ai_model = AIModel(model=AI_MODEL, API_KEY=API_KEY)
+
+    # Create Agent
     agent = Agent(
         system_prompt=system_prompt,
         MAX_MODEL_CALLS=MAX_MODEL_CALLS,
         tools=agent_tools,
-        ai_model=AI_MODEL,
-        API_KEY=API_KEY
+        ai=agent_ai_model
     )
 
     return agent

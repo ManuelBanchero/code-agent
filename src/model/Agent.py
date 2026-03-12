@@ -1,17 +1,15 @@
 from model.AIModel import AIModel
 import copy
 
-# tools_schema=list(map(lambda tool: tools[tool].get_schema(), tools))
 
-
-# config_properties could be temperature for example.
+# config_properties could be temperature for example
 class Agent:
-    def __init__(self, system_prompt, MAX_MODEL_CALLS, tools, ai_model, API_KEY, **config_properties):
+    def __init__(self, system_prompt, MAX_MODEL_CALLS, tools, ai, **config_properties):
         self.__system_prompt = system_prompt
         self.__MAX_MODEL_CALLS = MAX_MODEL_CALLS
         self.__tools = tools
         self.__messages = []
-        self.__ai = AIModel(model=ai_model, API_KEY=API_KEY)
+        self.__ai = ai
         self.__config_properties = dict(config_properties)
 
     # PUBLIC METHODS
@@ -19,6 +17,8 @@ class Agent:
         return self.__get_response(user_prompt)
 
     # PRIVATE METHODS
+
+    # Return type -> (response: string, success: boolean)
     def __get_response(self, user_prompt):
         # Create array messages
         self.__create_messages(user_prompt)
@@ -65,7 +65,6 @@ class Agent:
             function_name = function.name or ''
             print(f'Calling function: "{function_name}({function.args})"')
             result = self.__call_function(function_name, function.args)
-            print(result)
             # Ask to AIModel to create tool context
             context = self.__ai.get_tool_context(function_name, result)
             # Add to function_results
