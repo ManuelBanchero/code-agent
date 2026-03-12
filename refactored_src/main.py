@@ -24,4 +24,9 @@ agent = Agent(
     API_KEY=api_key
 )
 
-agent.query('get the files info about this directory')
+response, success = agent.query('get the files info about pkg directory')
+if success:
+    print(response)
+else:
+    print(response)
+    exit(1)

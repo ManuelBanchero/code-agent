@@ -26,7 +26,12 @@ class Agent:
         config = self.__create_ai_config()
         # Maximum amount of calls the Agent can call the model
         for _ in range(self.__MAX_MODEL_CALLS):
-            self.__call_model(config)
+            response = self.__call_model(config)
+            if response:
+                return response, True
+
+        # If did not return anything in the loop, return an error
+        return 'The AI Agent has excedeed of the maximum amount of calls', False
 
     def __create_messages(self, user_prompt):
         format_prompt = self.__ai.format_user_prompt(user_prompt)
@@ -45,10 +50,13 @@ class Agent:
             self.__update_messages(new_messages)
 
         function_calls = chat_completion['function_calls']
+        # If the model want to call a function before give a final answer
         if function_calls:
             self.__call_functions(function_calls)
+            return None
+
+        # The model has a final answer
         else:
-            print(chat_completion['response'])
             return chat_completion['response']
 
     def __call_functions(self, function_calls):
