@@ -1,12 +1,13 @@
 from model.Tool.Tool import Tool
 from model.Tool.Schema import Schema
+from config.config import MAX_CHARS
 import os
 
 
 class GetFileContent(Tool):
-    def __init__(self, working_directory, max_chars):
+    def __init__(self, working_directory):
         super().__init__(working_directory)
-        self.__max_chars = max_chars
+        self.__max_chars = MAX_CHARS
         self._schema = Schema(
             name='get_file_content',
             descripcion='Reads the content of a specific file relative to the working directory, with a safety limit on characters and path restricted to the permitted directory',

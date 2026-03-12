@@ -30,7 +30,8 @@ class AIModel:
             'response_tokens': response.usage_metadata.candidates_token_count,
             'candidates': response.candidates,
             'function_calls': response.function_calls,
-            'response': '' if response.function_calls else response.text
+            # If the model wants to call a function, response has not a text property yet
+            'response': None if response.function_calls else response.text
         }
 
     def get_tool_context(self, tool_name, tool_result):
@@ -75,17 +76,25 @@ class AIModel:
         return updated_config
 
     def __format_schema(self, schema):
+        # List of iterables values
+        iterables_values = ['array']
         properties_values = {}
         required_properties = []
 
         for property in schema['parameters']:
             value_type = schema['parameters'][property]['type']
+            # items_type exists only if value_type is an iterable
+            items_type = schema['parameters'][property]['items_type'] if 'items_type' in schema['parameters'][property] else None
             description = schema['parameters'][property]['description']
             required = schema['parameters'][property]['required']
+            nullable = schema['parameters'][property]['nullable'] if 'nullable' in schema['parameters'][property] else None
 
             properties_values[property] = types.Schema(
                 type=self.__get_property_type(value_type),
-                description=description
+                description=description,
+                items=types.Schema(type=self.__get_property_type(
+                    items_type)) if value_type in iterables_values else None,
+                nullable=nullable
             )
 
             if required:
@@ -104,6 +113,8 @@ class AIModel:
     def __get_property_type(self, value_type):
         if value_type.upper() == 'STRING':
             return types.Type.STRING
+        elif value_type.upper() == 'ARRAY':
+            return types.Type.ARRAY
         else:
             raise Exception(f'The value type "{value_type}" does not exists')
 
