@@ -63,6 +63,7 @@ class Agent:
         function_results = []
         for function in function_calls:
             function_name = function.name or ''
+            print(f'Calling function: "{function_name}({function.args})"')
             result = self.__call_function(function_name, function.args)
             # Ask to AIModel to create tool context
             context = self.__ai.get_tool_context(function_name, result)

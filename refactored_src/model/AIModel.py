@@ -30,7 +30,7 @@ class AIModel:
             'response_tokens': response.usage_metadata.candidates_token_count,
             'candidates': response.candidates,
             'function_calls': response.function_calls,
-            'response': response.text
+            'response': '' if response.function_calls else response.text
         }
 
     def get_tool_context(self, tool_name, tool_result):
