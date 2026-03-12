@@ -22,7 +22,7 @@ class WriteFile(Tool):
         )
 
     def get_schema(self):
-        return self._schema.get_schema()
+        return super().get_schema()
 
     def execute(self, file_path, content):
         try:
