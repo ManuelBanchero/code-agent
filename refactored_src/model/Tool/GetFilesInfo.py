@@ -6,7 +6,7 @@ import os
 class GetFilesInfo(Tool):
     def __init__(self, working_directory):
         super().__init__(working_directory)
-        self.__schema = Schema(
+        self._schema = Schema(
             name='get_files_info',
             descripcion='Lists files in a specified directory relative to the working directory, providing file size and directory status',
             directory={
@@ -17,7 +17,7 @@ class GetFilesInfo(Tool):
         )
 
     def get_schema(self):
-        return self.__schema.get_schema()
+        return self._schema.get_schema()
 
     def execute(self, directory='.'):
         try:

@@ -7,7 +7,7 @@ class GetFileContent(Tool):
     def __init__(self, working_directory, max_chars):
         super().__init__(working_directory)
         self.__max_chars = max_chars
-        self.__schema = Schema(
+        self._schema = Schema(
             name='get_file_content',
             descripcion='Reads the content of a specific file relative to the working directory, with a safety limit on characters and path restricted to the permitted directory',
             file_path={
@@ -18,7 +18,7 @@ class GetFileContent(Tool):
         )
 
     def get_schema(self):
-        return self.__schema.get_schema()
+        return self._schema.get_schema()
 
     def execute(self, file_path):
         try:

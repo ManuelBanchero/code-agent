@@ -6,7 +6,7 @@ import os
 class WriteFile(Tool):
     def __init__(self, working_directory):
         super().__init__(working_directory)
-        self.__schema = Schema(
+        self._schema = Schema(
             name='write_file',
             descripcion='Writes text content to a specified file path, automatically creating any missing parent directories and ensuring the operation stays within the permitted working directory',
             file_path={
@@ -22,7 +22,7 @@ class WriteFile(Tool):
         )
 
     def get_schema(self):
-        return self.__schema.get_schema()
+        return self._schema.get_schema()
 
     def execute(self, file_path, content):
         try:
